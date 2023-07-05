@@ -1,0 +1,43 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Todo Details{% endblock title %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <h1 class="display-3">Todo Details</h1>
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="fs-4 card-title mb-0">{{ todo.title }}</h3>
+          {% if todo.is_complete %}
+            <p class="form-text text-muted mb-3">Completed</p>
+          {% else %}
+            <p class="form-text text-muted mb-3">Not Complete</p>
+          {% endif %}
+          <p class="card-text">
+            <strong>Description:</strong>
+            {{ todo.description }}
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-end align-items-center gap-2">
+          <a
+            href="{{ url_for('todos.edit_todo', todo_id = todo.id) }}"
+            class="btn btn-sm btn-warning">
+            <i class="bi bi-pencil-fill"></i>
+          </a>
+          <form action="{{ url_for('todos.delete_todo', todo_id=todo.id) }}" method="POST">
+            <input type="hidden" name="todo_id" value="{{ todo.id }}" />
+            <button class="btn btn-sm btn-danger fs-6">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endwith %}
+
+{% endblock content %}

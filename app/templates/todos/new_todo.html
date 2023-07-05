@@ -1,0 +1,50 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Add Todo{% endblock title %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <h1 class="display-3">Add Todo</h1>
+      <div class="card shadow">
+        <form action="{{ url_for('todos.new_todo') }}" method="POST">
+          <input type="hidden" name="user_id" value="{{ session.user_id }}" />
+          <input type="hidden" name="is_complete" value="0" />
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="title" class="form-label">What needs to get done?</label>
+              <input type="text" name="title" id="title" class="form-control" />
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'title' %}
+                    <span class="form-text text-danger">{{ message }}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <textarea name="description" id="description" class="form-control"></textarea>
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'description' %}
+                    <span class="form-text text-danger">{{ message }}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end align-items-center gap-2">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Add Todo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endwith %}
+
+{% endblock content %}
