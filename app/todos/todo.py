@@ -69,5 +69,4 @@ class Todo:
         data = {
             "todo_id": todo_id
         }
-        results = connectToMySQL(Todo._db).query_db(query, data)
         return connectToMySQL(Todo._db).query_db(query, data)
